@@ -154,6 +154,7 @@
     <None Include="AH2017Jun07_121525.root" />
     <None Include="AH2017Jun07_122129.root" />
     <None Include="AH2017Jun07_122616.root" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

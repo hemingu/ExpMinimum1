@@ -13,7 +13,7 @@ namespace Constants
     const Int_t DAY = 7;
     const Int_t DATE = 20170607;    //Follwing the format of TDatime
 
-    const TString AXIS_NAME = "ADC Channel;Frequency";
+    const TString AXIS_NAME = ";ADC Channel;Frequency";
     const TString TREE_NAME = "tree";
     const TString LEAF_NAME_ADC = "adc";
     const TString LEAF_NAME_TIME = "hms";

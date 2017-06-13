@@ -91,6 +91,13 @@ int main(int argc, char *argv[])
     //TCanvas *c7 = new TCanvas();
     histBaBG->Draw();
 
+
+
+    for (Int_t i = 0; i < NCANVAS; i++)
+    {
+        canvases[i]->Update();
+    }
+
     canvases[0]->Print("hist.pdf(");
     for (Int_t i = 1; i < NCANVAS-1; i++)
     {
@@ -98,7 +105,24 @@ int main(int argc, char *argv[])
     }
     canvases[NCANVAS - 1]->Print("hist.pdf)");
 
+    TFile hists("histograms.root", "RECREATE");
+    histCoBG->Write();
+    histCsBG->Write();
+    histBaBG->Write();
+    hists.Close();
+
+
+    TNtuple *ntuple = new TNtuple("name", "title", "Co;Cs;Ba;BG");
+    for (Int_t i = 0; i < infoBG.nEntries; i++)
+    {
+
+    }
+
+    // Fitting histograms
+    histCoBG->Fit("gaus");
+
     //app.Run();
+    
 
     return 0;
 

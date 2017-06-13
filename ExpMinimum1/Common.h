@@ -18,6 +18,7 @@
 // libTree.lib
 #include "TTree.h"
 #include "TLeaf.h"
+#include "TNtuple.h"
 
 // libHist.lib
 #include "TH1I.h"

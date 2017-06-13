@@ -22,6 +22,8 @@ int main(int argc, char *argv[])
     TFile *fileBG = new TFile("AH2017Jun07_122616.root", "read");
     //TFile *fileHist = new TFile("histgrams.root", "read");
 
+    TCanvas *canvases[NCANVAS];
+    
 
     // Make Co60 Class
     ADCInfo infoCo(fileCo, Element::Co);
@@ -30,7 +32,8 @@ int main(int argc, char *argv[])
     {
         histCo->Fill((Double_t)infoCo.ADCChannel[i]);
     }
-    TCanvas *c1 = new TCanvas();
+    canvases[0] = new TCanvas();
+    //TCanvas *c1 = new TCanvas();
     histCo->Draw();
 
     // Cs137
@@ -40,18 +43,20 @@ int main(int argc, char *argv[])
     {
         histCs->Fill((Double_t)infoCs.ADCChannel[i]);
     }
+    canvases[1] = new TCanvas();
     //TCanvas *c2 = new TCanvas();
-    //histCs->Draw();
+    histCs->Draw();
 
     // Ba133
-    ADCInfo infoBa(fileCs, Element::Ba);
+    ADCInfo infoBa(fileBa, Element::Ba);
     TH1D *histBa = new TH1D("ADC Ba133", AXIS_NAME, BIN, HISTMIN, HISTMAX);
     for (Int_t i = 0; i < infoBa.nEntries; i++)
     {
         histBa->Fill((Double_t)infoBa.ADCChannel[i]);
     }
+    canvases[2] = new TCanvas();
     //TCanvas *c3 = new TCanvas();
-    //histBa->Draw();
+    histBa->Draw();
 
     // BackGround
     ADCInfo infoBG(fileBG, Element::BG);
@@ -60,17 +65,40 @@ int main(int argc, char *argv[])
     {
         histBG->Fill((Double_t)infoBG.ADCChannel[i]);
     }
-    TCanvas *c4 = new TCanvas();
+    canvases[3] = new TCanvas();
+    //TCanvas *c4 = new TCanvas();
     histBG->Draw();
 
+    // Co - BG
     TH1D *histCoBG = new TH1D("ADC Co60 - BG", AXIS_NAME, BIN, HISTMIN, HISTMAX);
     histCoBG->Add(histCo, histBG, 1.0, -(Double_t)infoCo.measurementTime / (Double_t)infoBG.measurementTime);
-    //histCoBG->Scale(1.0 / (infoBG.measurementTime + infoCo.measurementTime));
-    TCanvas *c5 = new TCanvas();
+    canvases[4] = new TCanvas();
+    //TCanvas *c5 = new TCanvas();
     histCoBG->Draw();
 
+    // Cs - BG
+    TH1D *histCsBG = new TH1D("ADC Cs137 - BG", AXIS_NAME, BIN, HISTMIN, HISTMAX);
+    histCsBG->Add(histCs, histBG, 1.0, -(Double_t)infoCs.measurementTime / (Double_t)infoBG.measurementTime);
+    canvases[5] = new TCanvas();
+    //TCanvas *c6 = new TCanvas();
+    histCsBG->Draw();
 
-    app.Run();
+
+    // Ba - BG
+    TH1D *histBaBG = new TH1D("ADC Ba133 - BG", AXIS_NAME, BIN, HISTMIN, HISTMAX);
+    histBaBG->Add(histBa, histBG, 1.0, -(Double_t)infoBa.measurementTime / (Double_t)infoBG.measurementTime);
+    canvases[6] = new TCanvas();
+    //TCanvas *c7 = new TCanvas();
+    histBaBG->Draw();
+
+    canvases[0]->Print("hist.pdf(");
+    for (Int_t i = 1; i < NCANVAS-1; i++)
+    {
+        canvases[i]->Print("hist.pdf");
+    }
+    canvases[NCANVAS - 1]->Print("hist.pdf)");
+
+    //app.Run();
 
     return 0;
 

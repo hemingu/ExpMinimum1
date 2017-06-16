@@ -39,7 +39,6 @@ public:
         }
 
         // Get Time
-        // Get ADC Channel
         leaf = tree->GetLeaf(Constants::LEAF_NAME_TIME);
 
         for (Int_t i = 0; i < nEntries; i++)

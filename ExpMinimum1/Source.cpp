@@ -106,6 +106,10 @@ int main(int argc, char *argv[])
     canvases[NCANVAS - 1]->Print("hist.pdf)");
 
     TFile hists("histograms.root", "RECREATE");
+    histCo->Write();
+    histCs->Write();
+    histBa->Write();
+    histBG->Write();
     histCoBG->Write();
     histCsBG->Write();
     histBaBG->Write();

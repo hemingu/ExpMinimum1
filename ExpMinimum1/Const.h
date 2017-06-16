@@ -11,7 +11,7 @@ namespace Constants
     const Int_t YEAR = 2017;
     const Int_t MONTH = 6;
     const Int_t DAY = 7;
-    const Int_t DATE = 20170607;    //Follwing the format of TDatime
+    const Int_t DATE = 20170607;    //Following the format of TDatime
 
     const TString AXIS_NAME = ";ADC Channel;Frequency";
     const TString TREE_NAME = "tree";
